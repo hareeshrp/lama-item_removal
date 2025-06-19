@@ -1,0 +1,4 @@
+- model.path=/home/rtx/lama/big-lama
+- indir=/home/rtx/lama/input_images
+- outdir=/home/rtx/lama/output
+- +model.predictor.target_mask_size=1024

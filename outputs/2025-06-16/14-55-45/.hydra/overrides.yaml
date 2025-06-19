@@ -1,0 +1,3 @@
+- model.path=/home/rtx/lama/big-lama
+- indir=/home/rtx/lama/temp_run
+- outdir=/home/rtx/lama/output
