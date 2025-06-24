@@ -115,10 +115,3 @@ pip install -r requirements.txt
 * [ ] Automatic object grouping
 * [ ] Batch mode for folders
 * [ ] Docker setup
-
-
-
-```
-
-Let me know if you'd like this converted into a `.md` file for download, or if you'd like a GitHub repo scaffold with this structure.
-```
