@@ -1,11 +1,11 @@
 ````markdown
-# Object Removal Pipeline using SAM + LaMa
+Object Removal Pipeline using SAM + LaMa
 
 This project integrates **Segment Anything Model (SAM)** by Meta and **LaMa (Look-at-the-mask)** by SAIC-AI to perform high-quality object removal in images. The goal is to let users semantically select and erase unwanted elements from images with visually realistic results.
 
 ---
 
-### 🔄 Pipeline Summary:
+🔄 Pipeline Summary:
 
 1. **SAM** segments the input image into object masks.
 2. User selects relevant masks and combines them into a **single binary mask**.
@@ -13,7 +13,7 @@ This project integrates **Segment Anything Model (SAM)** by Meta and **LaMa (Loo
 
 ---
 
-### 1. SAM: Segment Anything Model
+1. SAM: Segment Anything Model
 
 We use the SAM model to segment an input image into ~150 binary masks, each representing an individual object or region.
 
@@ -26,7 +26,7 @@ We use the SAM model to segment an input image into ~150 binary masks, each repr
 
 ---
 
-### 2. Combining Selected Masks
+2. Combining Selected Masks
 
 The user can visually inspect generated masks and combine a subset into a final binary mask used for inpainting.
 
@@ -42,8 +42,7 @@ selected_files = ["0.png", "2.png", "3.png"]
 * Combined binary mask: `input4_mask.png`
 
 ---
-
-### 3. LaMa Inpainting
+3. LaMa Inpainting
 
 A full pipeline script handles:
 
@@ -66,7 +65,7 @@ python3 lama_pipeline.py
 ---
 
 
-## 📦 Setup Instructions
+📦 Setup Instructions
 
 <details>
 <summary>Environment</summary>
@@ -80,7 +79,7 @@ python3 lama_pipeline.py
 
 </details>
 
-### 🏁 Install SAM
+🏁 Install SAM
 
 ```bash
 git clone https://github.com/facebookresearch/segment-anything.git
@@ -88,7 +87,7 @@ cd segment-anything
 pip install -e .
 ```
 
-### 🚧 Install LaMa
+🚧 Install LaMa
 
 ```bash
 git clone https://github.com/advimman/lama.git
@@ -101,7 +100,7 @@ pip install -r requirements.txt
 
 ---
 
-## 💡 Use Cases
+💡 Use Cases
 
 * 🏠 Real Estate: Remove furniture or clutter
 * 🛒 E-commerce: Clean backgrounds
@@ -110,7 +109,7 @@ pip install -r requirements.txt
 
 ---
 
-## 📈 Improvements Coming
+📈 Improvements Coming
 
 * [ ] UI interface (Gradio or Streamlit)
 * [ ] Automatic object grouping
