@@ -1,62 +1,79 @@
-````markdown
-Object Removal Pipeline using SAM + LaMa
+# 🧹 Object Removal Pipeline using SAM + LaMa
 
 This project integrates **Segment Anything Model (SAM)** by Meta and **LaMa (Look-at-the-mask)** by SAIC-AI to perform high-quality object removal in images. The goal is to let users semantically select and erase unwanted elements from images with visually realistic results.
 
 ---
 
-🔄 Pipeline Summary:
+## 🔄 Pipeline Summary
 
 1. **SAM** segments the input image into object masks.
-2. User selects relevant masks and combines them into a **single binary mask**.
+2. The user selects relevant masks and combines them into a **single binary mask**.
 3. **LaMa** takes the input image and the binary mask to inpaint and remove unwanted content.
 
 ---
 
-1. SAM: Segment Anything Model
+## 1. SAM: Segment Anything Model
 
-We use the SAM model to segment an input image into ~150 binary masks, each representing an individual object or region.
+We use the SAM model to segment an input image into \~150 binary masks, each representing an individual object or region.
 
+**Example Run:**
 
-🖼️ **Insert Images:**
+```bash
+python3 scripts/amg.py \
+  --checkpoint path/to/sam_vit_h_4b8939.pth \
+  --model-type vit_h \
+  --input input_images/input4.png
+```
+
+**Sample Images:**
 
 * `outputs/input4.png`: original image
 * `outputs/0.PNG`: example mask
-* Grid or overlay of 150 generated masks (optional)
+* Grid or overlay of all generated masks (optional)
 
 ---
 
-2. Combining Selected Masks
+## 2. Combining Selected Masks
 
-The user can visually inspect generated masks and combine a subset into a final binary mask used for inpainting.
+The user visually inspects the generated masks and combines the selected ones into a final binary mask used for inpainting.
+
+**combine\_selected\_masks.py**
 
 ```python
-# combine_selected_masks.py
 selected_files = ["0.png", "2.png", "3.png"]
 ```
 
-📄 Output: `input4_mask.png` — a binary mask with white areas indicating the regions to remove.
+**Output:**
 
-🖼️ **Insert Images:**
+* `input4_mask.png`: A binary mask with white areas indicating the regions to remove.
 
-* Combined binary mask: `input4_mask.png`
+**Insert Images:**
+
+* Combined mask preview (`input4_mask.png`)
 
 ---
-3. LaMa Inpainting
 
-A full pipeline script handles:
+## 3. LaMa Inpainting
+
+A full pipeline script (`lama_pipeline.py`) handles:
 
 * Resizing input and mask
 * Predicting inpainted output
 * Restoring image to original resolution
 
+**Run:**
+
 ```bash
 python3 lama_pipeline.py
 ```
 
-📄 Output: `restored_output.png`
+**Output:**
 
-🖼️ **Insert Comparison Table:**
+* `restored_output.png`: Final inpainted image
+
+---
+
+## 📸 Results
 
 | Original        | Combined Mask        | Final Output             |
 | --------------- | -------------------- | ------------------------ |
@@ -64,22 +81,21 @@ python3 lama_pipeline.py
 
 ---
 
-
-📦 Setup Instructions
+## 📦 Setup Instructions
 
 <details>
-<summary>Environment</summary>
+<summary>Environment Requirements</summary>
 
 * Python 3.8+
 * OpenCV (`cv2`)
 * NumPy
 * PyTorch 1.10+
 * `segment-anything` (Meta AI repo)
-* `LaMa` (patched for custom input/output usage)
+* `LaMa` (patched for CLI usage)
 
 </details>
 
-🏁 Install SAM
+### 🏁 Install SAM
 
 ```bash
 git clone https://github.com/facebookresearch/segment-anything.git
@@ -87,31 +103,46 @@ cd segment-anything
 pip install -e .
 ```
 
-🚧 Install LaMa
+### 🚧 Install LaMa
 
 ```bash
 git clone https://github.com/advimman/lama.git
 cd lama
-# Setup a virtual environment and install requirements
-conda create -n lama python=3.10
+# Set up Python environment
+conda create -n lama python=3.10 -y
 conda activate lama
 pip install -r requirements.txt
 ```
 
 ---
 
-💡 Use Cases
+## 💡 Use Cases
 
 * 🏠 Real Estate: Remove furniture or clutter
-* 🛒 E-commerce: Clean backgrounds
-* 🧪 Research: Create datasets with masked content
-* 🎨 Creative: Artistic or visual editing of photos
+* 🛒 E-commerce: Clean product backgrounds
+* 🧪 Research: Mask-sensitive dataset creation
+* 🎨 Creative Editing: Artistic or visual cleanup
 
 ---
 
-📈 Improvements Coming
+## 📈 Planned Improvements
 
 * [ ] UI interface (Gradio or Streamlit)
 * [ ] Automatic object grouping
-* [ ] Batch mode for folders
-* [ ] Docker setup
+* [ ] Batch processing support
+* [ ] Dockerized deployment
+
+---
+
+## 📖 License
+
+This project combines work from:
+
+* [Segment Anything (SAM)](https://github.com/facebookresearch/segment-anything)
+* [LaMa Inpainting](https://github.com/advimman/lama)
+
+Please refer to each respective repository for license information.
+
+---
+
+Let me know if you’d like this pushed as a GitHub repo template or packaged with your image assets!
