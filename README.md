@@ -1,10 +1,10 @@
-# 🧹 Object Removal Pipeline using SAM + LaMa
+# Object Removal Pipeline using SAM + LaMa
 
 This project integrates **Segment Anything Model (SAM)** by Meta and **LaMa (Look-at-the-mask)** by SAIC-AI to perform high-quality object removal in images. The goal is to let users semantically select and erase unwanted elements from images with visually realistic results.
 
 ---
 
-## 🔄 Pipeline Summary
+## Pipeline Summary
 
 1. **SAM** segments the input image into object masks.
 2. The user selects relevant masks and combines them into a **single binary mask**.
@@ -73,15 +73,15 @@ python3 lama_pipeline.py
 
 ---
 
-## 📸 Results
+## Results
 
 | Original        | Combined Mask        | Final Output             |
 | --------------- | -------------------- | ------------------------ |
-| ![](input4.png) | ![](input4_mask.png) | ![](restored_output.png) |
+| ![](outputs/input4.png) | ![](outputs/input4_mask.png) | ![](outputs/restored_output.png) |
 
 ---
 
-## 📦 Setup Instructions
+## Setup Instructions
 
 <details>
 <summary>Environment Requirements</summary>
@@ -95,7 +95,7 @@ python3 lama_pipeline.py
 
 </details>
 
-### 🏁 Install SAM
+### Install SAM
 
 ```bash
 git clone https://github.com/facebookresearch/segment-anything.git
@@ -103,7 +103,7 @@ cd segment-anything
 pip install -e .
 ```
 
-### 🚧 Install LaMa
+### Install LaMa
 
 ```bash
 git clone https://github.com/advimman/lama.git
@@ -116,33 +116,10 @@ pip install -r requirements.txt
 
 ---
 
-## 💡 Use Cases
+## Use Cases
 
-* 🏠 Real Estate: Remove furniture or clutter
-* 🛒 E-commerce: Clean product backgrounds
-* 🧪 Research: Mask-sensitive dataset creation
-* 🎨 Creative Editing: Artistic or visual cleanup
+* Real Estate: Remove furniture or clutter
+* E-commerce: Clean product backgrounds
+* Research: Mask-sensitive dataset creation
+* Creative Editing: Artistic or visual cleanup
 
----
-
-## 📈 Planned Improvements
-
-* [ ] UI interface (Gradio or Streamlit)
-* [ ] Automatic object grouping
-* [ ] Batch processing support
-* [ ] Dockerized deployment
-
----
-
-## 📖 License
-
-This project combines work from:
-
-* [Segment Anything (SAM)](https://github.com/facebookresearch/segment-anything)
-* [LaMa Inpainting](https://github.com/advimman/lama)
-
-Please refer to each respective repository for license information.
-
----
-
-Let me know if you’d like this pushed as a GitHub repo template or packaged with your image assets!
