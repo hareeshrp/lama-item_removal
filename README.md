@@ -1,97 +1,75 @@
 # Object Removal Pipeline using SAM + LaMa
 
-This project integrates **Segment Anything Model (SAM)** by Meta and **LaMa (Look-at-the-mask)** by SAIC-AI to perform high-quality object removal in images. The goal is to let users semantically select and erase unwanted elements from images with visually realistic results.
+This project integrates **Segment Anything Model (SAM)** by Meta and **LaMa (Look-at-the-mask)** by SAIC-AI to perform high-quality object removal in images. It allows users to semantically select and erase unwanted elements from images with visually realistic inpainting.
 
 ---
 
-## Pipeline Summary
+## Pipeline Overview
 
-1. **SAM** segments the input image into object masks.
-2. The user selects relevant masks and combines them into a **single binary mask**.
-3. **LaMa** takes the input image and the binary mask to inpaint and remove unwanted content.
-
----
-
-## 1. SAM: Segment Anything Model
-
-We use the SAM model to segment an input image into \~150 binary masks, each representing an individual object or region.
-
-**Example Run:**
-
-```bash
-python3 scripts/amg.py \
-  --checkpoint path/to/sam_vit_h_4b8939.pth \
-  --model-type vit_h \
-  --input input_images/input4.png
-```
-
-**Sample Images:**
-
-* `outputs/input4.png`: original image
-* `outputs/0.PNG`: example mask
-* Grid or overlay of all generated masks (optional)
+1. **SAM** segments the input image into 100+ object masks.
+2. **User selects and combines** desired masks into a single binary mask.
+3. **LaMa** uses this mask to remove unwanted regions and inpaint with context-aware reconstruction.
 
 ---
 
-## 2. Combining Selected Masks
+## SAM: Segment Anything Model
 
-The user visually inspects the generated masks and combines the selected ones into a final binary mask used for inpainting.
+We use SAM to break down an image into many fine-grained mask segments.
 
-**combine\_selected\_masks.py**
+**Original Image**  
+![Original](outputs/input4.png)
+
+**Example Segment Mask**  
+![Single Mask Example](outputs/0.png)
+
+> (You can optionally show a grid of all 100+ masks if you want)
+
+---
+
+## Combining Selected Masks
+
+You can programmatically or visually choose 2–5 relevant masks and merge them:
 
 ```python
+# combine_selected_masks.py
 selected_files = ["0.png", "2.png", "3.png"]
 ```
 
-**Output:**
+**Combined Binary Mask**  
+![Combined Mask](outputs/input4_mask.png)
 
-* `input4_mask.png`: A binary mask with white areas indicating the regions to remove.
-
-**Insert Images:**
-
-* Combined mask preview (`input4_mask.png`)
+> White regions indicate the area to be removed.
 
 ---
 
-## 3. LaMa Inpainting
+## Object Removal with LaMa
 
-A full pipeline script (`lama_pipeline.py`) handles:
+A custom Python script runs the full LaMa pipeline:
 
-* Resizing input and mask
-* Predicting inpainted output
-* Restoring image to original resolution
-
-**Run:**
+- Resizes the image and mask
+- Runs LaMa prediction
+- Resizes the output to original resolution
 
 ```bash
 python3 lama_pipeline.py
 ```
 
-**Output:**
-
-* `restored_output.png`: Final inpainted image
-
----
-
-## Results
-
-| Original        | Combined Mask        | Final Output             |
-| --------------- | -------------------- | ------------------------ |
-| ![](outputs/input4.png) | ![](outputs/input4_mask.png) | ![](outputs/restored_output.png) |
+**Final Inpainted Output**  
+![Final Output](outputs/restored_output.png)
 
 ---
 
 ## Setup Instructions
 
 <details>
-<summary>Environment Requirements</summary>
+<summary><strong>🔧 Environment</strong></summary>
 
-* Python 3.8+
-* OpenCV (`cv2`)
-* NumPy
-* PyTorch 1.10+
-* `segment-anything` (Meta AI repo)
-* `LaMa` (patched for CLI usage)
+- Python 3.8+
+- OpenCV (`cv2`)
+- NumPy
+- PyTorch 1.10+
+- `segment-anything` (Meta AI repo)
+- `LaMa` (patched for custom use)
 
 </details>
 
@@ -108,8 +86,7 @@ pip install -e .
 ```bash
 git clone https://github.com/advimman/lama.git
 cd lama
-# Set up Python environment
-conda create -n lama python=3.10 -y
+conda create -n lama python=3.10
 conda activate lama
 pip install -r requirements.txt
 ```
@@ -118,8 +95,7 @@ pip install -r requirements.txt
 
 ## Use Cases
 
-* Real Estate: Remove furniture or clutter
-* E-commerce: Clean product backgrounds
-* Research: Mask-sensitive dataset creation
-* Creative Editing: Artistic or visual cleanup
-
+- Real Estate: Remove clutter or furniture
+- E-commerce: Product isolation
+- Research: Dataset creation with masked content
+- Creative tools for designers and artists
